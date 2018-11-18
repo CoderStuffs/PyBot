@@ -19,19 +19,23 @@ from discord.ext import commands
 
 class MyClient(discord.Client):
     async def on_ready(self):
+        """ Gets called when the client is done preparing the data received from Discord, usually after login. """
         print('Logged in as: ')
         print(self.user.name)
         print(self.user.id)
         print('------')
 
-    # If a user types !hello the bot will respond with 'Hello! (nameOfUser here)'
-    async def on_message(self, message):
 
+    async def on_message(self, message):
+        """ Gets called when there the Bot receives a new message from the server.
+            This function handles the logic for responding to various messages and commands.
+        """
         if message.author == self.user:
             return
 
+        # If a user types !hello the bot will respond with 'Hello! (nameOfUser here)'.
         if message.content.startswith('!hello'):
-            await client.send_message(message.channel, content = (f'Hello! {message.author.mention}')
+            await client.send_message(message.channel, content=(f'Hello! {message.author.mention}')
 
 client = MyClient()
 client.run(TOKEN)
