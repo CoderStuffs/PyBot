@@ -1,15 +1,18 @@
 from os import listdir
 
 class Resources(object):
-    __slots__ = ('dictionary')
+    """Provides tools for using resources in Resources directory"""
+    
+    __slots__ = ('dictionary')    
 
     def __init__(self):
+        """Calls self.refresh to make self.dictionary available."""
         self.refresh()
 
     def refresh(self):
-    #sets self.dictionary to current resource information
-    #{'resource_title': [urls]}
-        
+        """Sets self.dictionary to current resource information
+        {'resource_title': [urls]}.
+        """    
         resources = {}
         filenames = listdir(path='Resources')
         for filename in filenames:
@@ -21,12 +24,13 @@ class Resources(object):
                     urls.append(line.strip())
                 resources[resource_title] = urls
         self.dictionary = resources
+        
 
     def add_url(self, target, url):
-        #add url to existing resource file
-        #creates a backup of original in Backups directory
-        #raises FileNotFoundError if target does not point to an existing file
-
+        """Adds {url} to existing {target} file.
+        Creates a backup of {target} in Backups directory.
+        Raises FileNotFoundError if {target} does not point to an existing file.
+        """
         with open(f'Resources/{target}.txt', 'r+') as target_file:
             original_file = target_file.read() #read takes us to EOF
             target_file.write(f'{url}\n') #appends
@@ -36,8 +40,9 @@ class Resources(object):
         self.refresh()
 
     def create(self, resource_name):
-        #create a new .txt file with given resource name
-        #Raises "FileExists" error if file exists
+        """Creates a new .txt file with {resource_name}.
+        Raises "FileExists" error if file exists.
+        """
 
         with open(f'Resources/{resource_name}.txt', 'x') as new_resource_file:
             pass
@@ -45,7 +50,7 @@ class Resources(object):
         self.refresh()        
 
     def restore(self, target):
-        #restore a backup
+        """Restores {target} with its backup."""
         with open(f'Backups/{target}_backup.txt') as backup_file:
             with open(f'Resources/{target}.txt', 'w') as target_file:
                 target_file.write(backup_file.read())
