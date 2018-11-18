@@ -1,0 +1,4 @@
+http://moocfi.github.io/courses/2013/programming-part-1/
+https://www.udacity.com/course/java-programming-basics--ud282
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-092-introduction-to-programming-in-java-january-iap-2010/index.htm
+http://www.learnjavaonline.org/
