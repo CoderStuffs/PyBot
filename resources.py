@@ -4,22 +4,23 @@ class Resources(object):
     __slots__ = ('dictionary')
 
     def __init__(self):
-        self.dictionary = self.refresh()
+        self.refresh()
 
     def refresh(self):
-    #returns a dict containing current resource information
+    #sets self.dictionary to current resource information
     #{'resource_title': [urls]}
+        
         resources = {}
         filenames = listdir(path='Resources')
         for filename in filenames:
             #take first half of filename split at file descriptor
             resource_title = filename.split('.')[0]
             urls = []
-            with open(f'Resources/{filename}', 'r') as file:
-                for line in file:
+            with open(f'Resources/{filename}', 'r') as resource_file:
+                for line in resource_file:
                     urls.append(line.strip())
                 resources[resource_title] = urls
-        return(resources)
+        self.dictionary = resources
 
     def add_url(self, target, url):
         #add url to existing resource file
@@ -31,6 +32,8 @@ class Resources(object):
             target_file.write(f'{url}\n') #appends
         with open(f'Backups/{target}_backup.txt', 'w') as backup_file:
             backup_file.write(original_file)
+            
+        self.refresh()
 
     def create(self, resource_name):
         #create a new .txt file with given resource name
@@ -38,11 +41,15 @@ class Resources(object):
 
         with open(f'Resources/{resource_name}.txt', 'x') as new_resource_file:
             pass
+        
+        self.refresh()        
 
     def restore(self, target):
         #restore a backup
         with open(f'Backups/{target}_backup.txt') as backup_file:
             with open(f'Resources/{target}.txt', 'w') as target_file:
                 target_file.write(backup_file.read())
+                
+        self.refresh()
 
 
