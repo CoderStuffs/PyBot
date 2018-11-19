@@ -22,7 +22,7 @@ To find a way to contribute, visit the project tied to this repo. Your guideline
 ### Project
   The project hosts 3 columns:
    * Needs Learner - Any items under this section are up for grabs. These will include features to be added in, bug fixes, etc.
-      * To claim something from this section, please navigate to the Issues tab in the repo. Once there find the item you wanted to work on and post a comment that you'd like to work on it. A repo maintainer will then move that item to the in progress section with your name included.
+      * To claim something from this section, please navigate to the Issues tab in the repo. Once there find the item you wanted to work on and post a comment that you'd like to work on it. A repo maintainer will then move that item to the in progress section with your name included as well as assign you to the issue
 
    * In Progress - Any items here are currently in progress. The name of the user working on the feature, bug, etc will be included.
 
