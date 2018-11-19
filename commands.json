@@ -1,6 +1,0 @@
-{
-    "help": "Show available commands, arguments, and functions",
-    "learn": "Passing in a language name will list resources for learning said language/tech",
-    "burn" : "Allow mods to auto delete old messages from channels"
-
-}
