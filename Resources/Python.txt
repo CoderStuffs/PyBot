@@ -1,6 +1,0 @@
-https://python-textbook.readthedocs.io/en/1,0/Introduction.html
-https://automatetheboringstuff.com/
-https://developers.google.com/edu/python/
-https://docs.python.org/3/tutorial/index.html
-https://www.edx.org/course/introduction-to-computer-science-and-programming-using-python#.VJw5pv-kAA
-https://greenteapress.com/wp/think-python-2e/
