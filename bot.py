@@ -60,23 +60,23 @@ async def hello(ctx):
     await ctx.send(f"Hello! {ctx.author.mention}")
 
 @bot.command()
-async def cleanhere(ctx):
+async def cleanhere(ctx, days):
     """When an admin types !cleanhere the bot will delete all old messages (from more than five days ago) in that channel. """
     channel = ctx.channel
     
     now = datetime.now()
-    bfr = now - timedelta(days=5)
+    bfr = now - timedelta(days=int(days))
     deleted = await channel.purge(limit=5000, check=notpinned, before=bfr)
     await channel.send(f"Cleaned up this channel, deleted {len(deleted)} messages.")
 
 @bot.command()
-async def cleanall():
+async def cleanall(ctx, days):
     """When an admin types !cleanall the bot will delete all old messages (from more than five days ago) in that channel. """
     channels = bot.getTextChannels()
     exceptedCategories = ["Admin", "README.md"]
 
     now = datetime.now()
-    bfr = now - timedelta(days=5)
+    bfr = now - timedelta(days=int(days))
     for channel in channels:
         deleted = []
         if channel.category.name not in exceptedCategories:
