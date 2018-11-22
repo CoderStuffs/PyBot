@@ -1,6 +1,10 @@
 {
-    "help": "Show available commands, arguments, and functions",
-    "learn": "Passing in a language name will list resources for learning said language/tech",
-    "burn" : "Allow mods to auto delete old messages from channels"
-
+    "everyone": {
+        "help":"Show available commands, arguments, and functions",
+        "learn":"Passing in a language name will list resources for learning said language/tech"
+    },
+    "admin": {
+        "cleanhere": "Allows mods to auto delete old messages from a channel.",
+        "cleanall": "Allows mods to auto delete old messages from all channels at once"
+    }
 }
