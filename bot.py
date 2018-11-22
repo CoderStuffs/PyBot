@@ -4,18 +4,13 @@
 import json
 import discord
 from discord.ext import commands
+from datetime import datetime, timedelta
 
-# Ignore the following commented out code. Mods are discussing how we will handle hosting and the bot's token.
+cacheJSON = 'json/cache.json'
 
-# cacheJSON = 'json/cache.json'
-
-# try:
-#     with open(cacheJSON, 'r') as foo:
-#         contents = json.load(foo)
-#         TOKEN = contents['token']
-
-# except FileNotFoundError:
-#     pass
+with open(cacheJSON, 'r') as jfile:
+    contents = json.load(jfile)
+    TOKEN = contents['token']
 
 class Bot(commands.Bot):
     def __init__(self, *args, **kwargs):
@@ -26,8 +21,25 @@ class Bot(commands.Bot):
             return
         
         await self.process_commands(message)
+    
+    def getGuild(self):
+        return self.guilds[0]
+    
+    def getTextChannels(self):
+        guild = self.getGuild()
+        return guild.text_channels
+    
 
-bot = Bot(command_prefix='!')
+bot = Bot(command_prefix='!', case_insensitive=True)
+
+def notpinned (msg):
+    """Check if the message is pinned."""
+    return msg.pinned == False
+
+"""
+BOT 
+EVENTS
+"""
 
 @bot.event
 async def on_ready():
@@ -35,13 +47,41 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    
+
+"""
+BOT 
+COMMANDS
+"""
+
 @bot.command()
 async def hello(ctx):
-    """
-    If a user types !hello the bot will respond with 'Hello! (nameOfUser here)
-    """
+    """If a user types !hello the bot will respond with 'Hello! (nameOfUser here)'."""
+    
     await ctx.send(f"Hello! {ctx.author.mention}")
+
+@bot.command()
+async def cleanhere(ctx, days):
+    """When an admin types !cleanhere the bot will delete all old messages (from more than five days ago) in that channel. """
+    channel = ctx.channel
+    
+    now = datetime.now()
+    bfr = now - timedelta(days=int(days))
+    deleted = await channel.purge(limit=5000, check=notpinned, before=bfr)
+    await channel.send(f"Cleaned up this channel, deleted {len(deleted)} messages.")
+
+@bot.command()
+async def cleanall(ctx, days):
+    """When an admin types !cleanall the bot will delete all old messages (from more than five days ago) in that channel. """
+    channels = bot.getTextChannels()
+    exceptedCategories = ["Admin", "README.md"]
+
+    now = datetime.now()
+    bfr = now - timedelta(days=int(days))
+    for channel in channels:
+        deleted = []
+        if channel.category.name not in exceptedCategories:
+            deleted = await channel.purge(limit=5000, check=notpinned, before=bfr)
+            await channel.send(f"Cleaned up this channel, deleted {len(deleted)} messages.")
 
 bot.run(TOKEN)
 
